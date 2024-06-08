@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from './components/Card';
+import './Dashboard.css'
 
 const Dashboard = ({ fil }) => {
     const [users, setUsers] = useState([]);
@@ -21,12 +22,15 @@ const Dashboard = ({ fil }) => {
 
     return (
         <div>
-            <h1>Usuario</h1>
-            {users.filter(user => user.name && user.name.includes(fil)).map(user => (
+            <h1>Usuarios</h1>
+            <div className='dash'>
+                {users.filter(user => user.name && user.name.includes(fil)).map(user => (
                 <div key={user.id}>
                     <Card user={user} />
                 </div>
             ))}
+            </div>
+            
         </div>
     );
 }

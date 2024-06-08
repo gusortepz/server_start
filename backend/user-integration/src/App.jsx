@@ -31,12 +31,12 @@ function App() {
           Register
         </div>
         <div className='n'>
-          <textarea
+          <input className='inputApp'
             name='filters'
             value={filters.filters}
             onChange={handleSearch}
-          ></textarea>
-          <button
+          ></input>
+          <button className='searchButton'
             onClick={() => navigate('/')}
           >Search</button>
         </div>

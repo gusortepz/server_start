@@ -2,21 +2,16 @@ require('dotenv').config();
 const OpenAI = require('openai');
 
 async function getResponseChat(req, res) {
-  const { prompt } = req.body;
+  const { prompt, context } = req.body;
   const openai = new OpenAI(process.env.OPENAI_API_KEY);
   try {
     const stream = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        {
-          role: 'system',
-          content:
-            'You are an expert in physical therapy. You can answer any question related to physical therapy.',
-        },
+        { role: 'assistant', content: context },
         { role: 'user', content: prompt },
       ],
       stream: true,
-      
     });
     let responseText = '';
     for await (const chunk of stream) {

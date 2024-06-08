@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import PrevDescription from "./components/PrevDescription";
 import CardInfo from "./components/CardInfo";
+import './Users.css'
 
 const Users = () => {
     const { id } = useParams();
 
     const [form, setForm] = useState({
+        context: '',
         description: '',
         prescription: ''
     });
@@ -49,6 +51,7 @@ const Users = () => {
     const handleGenerateHelp = async () => {
         const prompt = {
             prompt: form.description,
+            context: form.context,
         };
         const response = await fetch('http://localhost:3000/chat', {
             method: 'POST',
@@ -58,14 +61,16 @@ const Users = () => {
             body: JSON.stringify(prompt),
         });
         const data = await response.json();
-        form.prescription = data;
+        
         const responseString = data.response; // Extraer la respuesta directamente
+        form.prescription = responseString;
         setResp(responseString);
+    }
 
-        // Aquí el cuerpo de la solicitud debe ser una cadena JSON válida
+    const handleSave = async () => {
         const sendBody = {
             description: form.description,
-            prescription: responseString
+            prescription: form.prescription
         };
 
         const send = await fetch(`http://localhost:3000/description/${id}`, {
@@ -88,41 +93,89 @@ const Users = () => {
 
     return (
         <>
-            <div>Users</div>
-            <div>
-                <CardInfo user={user} />
-                <PrevDescription description={descriptions} />
-            </div>
-            <div>
-                <p>Description</p>
-                <textarea
-                    label="Description"
-                    value={form.description}
-                    name="description"
-                    onChange={handleInputChange}
-                />
-                <p>Prescription</p>
-                <p>{resp}</p>
+            <div className="contOne">
+                <div className="us">Usuario</div>
                 <div>
-                    <button
-                        onClick={handleGenerateHelp}
-                        style={{
-                            height: '50px',
-                            width: '140px',
-                            backgroundColor: '#399C7E',
-                            border: 'none',
-                            color: 'white',
-                            cursor: 'pointer',
-                            fontSize: '15px',
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            borderRadius: '5px',
-                        }}
-                        type="submit">
-                        Submit
-                    </button>
+                    <CardInfo user={user} />
+                    
                 </div>
             </div>
+            <div className="cont">
+                <div className="contTwo">
+                    <PrevDescription description={descriptions} />
+                </div>
+                <div className="contThree">
+                    <div className="chat">
+                        <div className="chatO">
+                            <p>Context</p>
+                                <textarea
+                                    label="Context"
+                                    value={form.context}
+                                    name="context"
+                                    onChange={handleInputChange}
+                                />
+                        </div>
+                        <div className="chatT">
+                            <p>Description</p>
+                                <textarea
+                                    label="Description"
+                                    value={form.description}
+                                    name="description"
+                                    onChange={handleInputChange}
+                                />
+                                <div>
+                                    <button
+                                        onClick={handleGenerateHelp}
+                                        style={{
+                                            height: '50px',
+                                            width: '140px',
+                                            backgroundColor: '#399C7E',
+                                            border: 'none',
+                                            color: 'white',
+                                            cursor: 'pointer',
+                                            fontSize: '15px',
+                                            fontWeight: 'bold',
+                                            textAlign: 'center',
+                                            borderRadius: '5px',
+                                        }}
+                                        type="submit">
+                                        Generate help
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                    
+                        
+                        
+                        <p>Prescription</p>
+                        <div className="resp">
+                            <textarea defaultValue={resp}
+                            label="Prescription"
+                            value={form.prescription}
+                            name="prescription"
+                            onChange={handleInputChange}></textarea>
+                        </div>
+                        <div>
+                            <button
+                                onClick={handleSave}
+                                style={{
+                                    height: '50px',
+                                    width: '140px',
+                                    backgroundColor: '#399C7E',
+                                    border: 'none',
+                                    color: 'white',
+                                    cursor: 'pointer',
+                                    fontSize: '15px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    borderRadius: '5px',
+                                }}
+                                type="submit">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
         </>
     );
 }

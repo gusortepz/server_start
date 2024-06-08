@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import userImage from "../../../assets/userImage.svg"
+import './Card.css'
 
 const Card = ({user}) => {
     const navigate = useNavigate();
@@ -10,28 +11,15 @@ const Card = ({user}) => {
 
     return (
         <>
-        <div>
-            <div 
-        style = {{
-            boxShadow: '0px 10px 15px -3px rgba(0,0,0,0.1)',
-            width: '230px',
-            height: '60px',
-            display: 'flex',
-            justifyContent: 'left',
-            alignItems: 'center',
-            margin: '20px',
-        }}
-        onClick={handleClick}
-        >
-            <div style={{paddingLeft: '10px', paddingRight: '10px'}}>
-                <img src={userImage} width={30} alt="user"/>
-            </div>
-            <div>
-                <p>{user.name}</p>
-                <p>{user.email}</p>
-            </div>
-
-        </div>
+        <div class="card">
+          <div class="card-border-top">
+          </div>
+          <div class="img"><img src={userImage} width={70}></img>
+          </div>
+          <span>{user.name}</span>
+          <p class="job">{user.email}</p>
+          <button onClick={handleClick}> Ver más
+          </button>
         </div>
         </>
     );
