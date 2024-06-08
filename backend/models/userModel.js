@@ -18,8 +18,8 @@ const getUserById = async (id) => {
 
 const createUser = async (user) => {
   try {
-    const query = "INSERT INTO users (name,email,lastname,borncity) VALUES ($1,$2,$3,$4) RETURNING *;";
-    const { rows } = await db.query(query, [user.name, user.email, user.lastname, user.borncity]);
+    const query = "INSERT INTO users (name,email,lastname,borncity,interests,profession) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *;";
+    const { rows } = await db.query(query, [user.name, user.email, user.lastname, user.borncity, user.interests, user.profession]);
     return rows[0];
   } catch (error) {
     throw new Error(error);

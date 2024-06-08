@@ -13,17 +13,18 @@ const Register = () => {
     >
       <div
         style={{
-          height: '100vh',
-          width: '100vw',
+          height: '70vh',
+          width: '50vw',
           display: 'flex',
           justifyContent: 'center',
           alignContent: 'center',
           alignItems: 'center',
+          margin: '5rem',
         }}
       >
         <img src={form} alt="formImage" width={700} />
       </div>
-      <div style={{ width: '50%' }}>
+      <div style={{ width: '50vw' }}>
         <Form />
       </div>
     </div>

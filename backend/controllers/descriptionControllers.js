@@ -13,8 +13,8 @@ async function getDescriptionById(req, res) {
 async function createDescription(req, res) {
   try{
       const { userId } = req.params;
-      const { description, prescription } = req.body;
-      const newDescription = await descriptionModel.createDescription(description, prescription, userId);
+      const { description, prescription, context, pdfurl } = req.body;
+      const newDescription = await descriptionModel.createDescription(description, prescription, context, pdfurl, userId);
       res.status(201).json(newDescription);
   } catch (error) {
       console.log(error);

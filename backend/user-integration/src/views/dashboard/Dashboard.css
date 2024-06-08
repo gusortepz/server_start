@@ -1,7 +1,7 @@
 .dash {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 5 columnas */
-    gap: 10px; /* Espacio entre los elementos */
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
   }
   
   @media (max-width: 1200px) {

@@ -10,7 +10,8 @@ const Users = () => {
     const [form, setForm] = useState({
         context: '',
         description: '',
-        prescription: ''
+        prescription: '',
+        pdfUrl: '',
     });
 
     const [user, setUser] = useState([]);
@@ -52,7 +53,9 @@ const Users = () => {
         const prompt = {
             prompt: form.description,
             context: form.context,
+            pdfUrl: form.pdfUrl,
         };
+
         const response = await fetch('http://localhost:3000/chat', {
             method: 'POST',
             headers: {
@@ -62,7 +65,7 @@ const Users = () => {
         });
         const data = await response.json();
         
-        const responseString = data.response; // Extraer la respuesta directamente
+        const responseString = data.response;
         form.prescription = responseString;
         setResp(responseString);
     }
@@ -70,7 +73,9 @@ const Users = () => {
     const handleSave = async () => {
         const sendBody = {
             description: form.description,
-            prescription: form.prescription
+            prescription: form.prescription,
+            context: form.context,
+            pdfurl: form.pdfUrl,
         };
 
         const send = await fetch(`http://localhost:3000/description/${id}`, {
@@ -93,43 +98,65 @@ const Users = () => {
 
     return (
         <>
-            <div className="contOne">
-                <div className="us">Usuario</div>
-                <div>
-                    <CardInfo user={user} />
-                    
-                </div>
-            </div>
-            <div className="cont">
-                <div className="contTwo">
-                    <PrevDescription description={descriptions} />
-                </div>
+            <div className="cont" style={{height:'80vh'}}>
+                <div className="contTwo" style={{
+                    backgroundImage: 'linear-gradient(144deg,#8608b4, #492fed 60%,#bd6fda)',
+                    height:'100%',
+                    borderRadius:'2rem',
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    }}>
+                        <div className="us">Usuario</div>
+                            <div>
+                                <CardInfo user={user} />
+                            </div>
+                            <PrevDescription description={descriptions} />
+                        </div>
                 <div className="contThree">
                     <div className="chat">
-                        <div className="chatO">
-                            <p>Context</p>
+                        <div style={{display:'flex'}}>
+                            <div style={{display:'flex',flexDirection:'column', width:'50%'}}>
+                                <p className="pU">Context</p>
                                 <textarea
                                     label="Context"
                                     value={form.context}
                                     name="context"
                                     onChange={handleInputChange}
+                                    style={{width: '90%', height: '4rem'}}
+                                    className="inputChat"
                                 />
+                            </div>
+                            <div style={{display:'flex',flexDirection:'column', width:'50%'}}>
+                                <p className="pU">PDF URL</p>
+                                <textarea
+                                    label="pdfUrl"
+                                    value={form.pdfUrl}
+                                    name="pdfUrl"
+                                    onChange={handleInputChange}
+                                    style={{width: '90%', height: '4rem'}}
+                                    className="inputChat"
+                                />
+                            </div>
                         </div>
-                        <div className="chatT">
-                            <p>Description</p>
+                        <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
+                            <p className="pU">Description</p>
                                 <textarea
                                     label="Description"
                                     value={form.description}
                                     name="description"
                                     onChange={handleInputChange}
+                                    style={{width: '95%', height: '6rem'}}
+                                    className="inputChat"
                                 />
                                 <div>
                                     <button
                                         onClick={handleGenerateHelp}
                                         style={{
-                                            height: '50px',
+                                            height: '35px',
                                             width: '140px',
-                                            backgroundColor: '#399C7E',
+                                            backgroundImage: 'linear-gradient(144deg,#8608b4, #492fed 60%,#bd6fda)',
                                             border: 'none',
                                             color: 'white',
                                             cursor: 'pointer',
@@ -137,6 +164,7 @@ const Users = () => {
                                             fontWeight: 'bold',
                                             textAlign: 'center',
                                             borderRadius: '5px',
+                                            marginTop: '0.5rem',
                                         }}
                                         type="submit">
                                         Generate help
@@ -147,21 +175,24 @@ const Users = () => {
                     
                         
                         
-                        <p>Prescription</p>
+                        <p className="pU" style={{marginTop:'2rem'}}>Prescription</p>
                         <div className="resp">
                             <textarea defaultValue={resp}
                             label="Prescription"
                             value={form.prescription}
                             name="prescription"
-                            onChange={handleInputChange}></textarea>
+                            onChange={handleInputChange}
+                            className="inputChat"
+                            style={{ width: '95%', height:'8rem'}}
+                            ></textarea>
                         </div>
                         <div>
                             <button
                                 onClick={handleSave}
                                 style={{
-                                    height: '50px',
+                                    height: '35px',
                                     width: '140px',
-                                    backgroundColor: '#399C7E',
+                                    backgroundColor: 'black',
                                     border: 'none',
                                     color: 'white',
                                     cursor: 'pointer',
@@ -169,6 +200,7 @@ const Users = () => {
                                     fontWeight: 'bold',
                                     textAlign: 'center',
                                     borderRadius: '5px',
+                                    marginTop: '0.5rem',
                                 }}
                                 type="submit">
                                 Save

@@ -1,4 +1,14 @@
-input {
-    width: 320px;
-    border-radius: 0.75rem;
+.formInput {
+    font-family: "SF Pro";
+    font-size: 1rem;
+    border: 1.5px solid black;
+    border-radius: 0.5rem;
+    box-shadow: 2.5px 3px 0 #000;
+    outline: none;
+    transition: ease 0.25s;
   }
+  
+  .formInput:focus {
+    box-shadow: 5.5px 7px 0 black;
+  }
+  

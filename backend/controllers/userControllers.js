@@ -26,11 +26,11 @@ async function getUserById(req, res) {
 async function createUser(req, res) {
   const user = req.body;
   console.log(user);
-
   try {
     const newuser = await UserModel.createUser(user);
     res.json(newuser);
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 }
